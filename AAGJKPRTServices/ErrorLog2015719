@@ -1,0 +1,3 @@
+7/19/2015 10:59:40 AM ==> Message: The string was not recognized as a valid DateTime. There is an unknown word starting at index 1.Stack Trace:     at System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   at System.Convert.ToDateTime(String value)
+   at AAGJKPRTServices.Service1.GetUserlist() in e:\Gaurav\AAGJKPRTServices\AAGJKPRTServices\Service1.svc.cs:line 27
