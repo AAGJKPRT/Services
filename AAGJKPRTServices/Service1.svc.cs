@@ -22,10 +22,10 @@ namespace AAGJKPRTServices
             try
             {
                 userinfo userinfo;
-                //This is just to check the change in code base...
+                //This is just to check the change in code base ...
                 userInfoDataContract.Message = "Service Call !!!";
                 userInfoDataContract.Status = true;
-                DateTime dt = Convert.ToDateTime("0w204/1990ww");
+                //DateTime dt = Convert.ToDateTime("0w204/1990ww");
                 for (int counter = 0; counter < 10; counter++)
                 {
                     userinfo = new userinfo();

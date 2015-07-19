@@ -2,4 +2,6 @@
    at System.Convert.ToDateTime(String value)
    at AAGJKPRTServices.Service1.GetUserlist() in e:\Gaurav\AAGJKPRTServices\AAGJKPRTServices\Service1.svc.cs:line 277/19/2015 11:12:13 AM ==> Message: The string was not recognized as a valid DateTime. There is an unknown word starting at index 1.Stack Trace:     at System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
    at System.Convert.ToDateTime(String value)
+   at AAGJKPRTServices.Service1.GetUserlist() in e:\Gaurav\AAGJKPRTServices\AAGJKPRTServices\Service1.svc.cs:line 287/19/2015 12:40:10 PM ==> Message: The string was not recognized as a valid DateTime. There is an unknown word starting at index 1.Stack Trace:     at System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   at System.Convert.ToDateTime(String value)
    at AAGJKPRTServices.Service1.GetUserlist() in e:\Gaurav\AAGJKPRTServices\AAGJKPRTServices\Service1.svc.cs:line 28
