@@ -21,5 +21,9 @@ namespace AAGJKPRTServices
         [OperationContract]
         [WebInvoke(Method = "GET", UriTemplate = "/Getuserinfo/{username}", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         UserInfoDataContract Getuserinfo(string username);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET", UriTemplate = "/GetbothUsers/{username1},{username2}", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        UserInfoDataContract GetbothUsers(string username1, string username2);
     }
 }

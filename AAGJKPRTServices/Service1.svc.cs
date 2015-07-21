@@ -101,5 +101,77 @@ namespace AAGJKPRTServices
             }
             return userInfoDataContract;
         }
+        public UserInfoDataContract GetbothUsers(string username1, string username2)
+        {
+            UserInfoDataContract userInfoDataContract = new UserInfoDataContract();
+            userinfo userinfo;
+            try
+            {
+                //This is just to check the change in code base...
+                userInfoDataContract.Message = "Service Call !!!";
+                userInfoDataContract.Status = true;
+                if (username1.ToLower() == "gaurav" && username2.ToLower() == "jai")
+                {
+                    userinfo = new userinfo();
+                    userinfo.UserId = 1;
+                    userinfo.fname = "Gaurav";
+                    userinfo.mname = "";
+                    userinfo.lname = "Kaushik";
+                    userinfo.age = 24;
+                    userinfo.DOB = "02/04/1990";
+                    userInfoDataContract.Data.Add(userinfo);
+                    //This is only for the demo purpose
+                    userinfo = new userinfo();
+                    userinfo.UserId = 2;
+                    userinfo.fname = "Jai";
+                    userinfo.mname = "";
+                    userinfo.lname = "Sajwan";
+                    userinfo.age = 24;
+                    userinfo.DOB = "yaad nahi";
+                    userInfoDataContract.Data.Add(userinfo);
+                }
+                else if (username1.ToLower() == "jai" && username2.ToLower() == "gaurav")
+                {
+                    userinfo = new userinfo();
+                    userinfo.UserId = 2;
+                    userinfo.fname = "Jai";
+                    userinfo.mname = "";
+                    userinfo.lname = "Sajwan";
+                    userinfo.age = 24;
+                    userinfo.DOB = "02/04/1990";
+                    userInfoDataContract.Data.Add(userinfo);
+                    //This is only for the demo purpose
+                    userinfo = new userinfo();
+                    userinfo.UserId = 1;
+                    userinfo.fname = "Gaurav";
+                    userinfo.mname = "";
+                    userinfo.lname = "Kaushik";
+                    userinfo.age = 24;
+                    userinfo.DOB = "02/04/1990";
+                    userInfoDataContract.Data.Add(userinfo);
+                }
+                else
+                {
+                    //userinfo = new userinfo();
+                    //userinfo.UserId = 0;
+                    //userinfo.fname = "";
+                    //userinfo.mname = "";
+                    //userinfo.lname = "";
+                    //userinfo.age = 0;
+                    //userinfo.DOB = "";
+                    userInfoDataContract.Message = "User not found !";
+                    userInfoDataContract.Status = true;
+                    //userInfoDataContract.Data.Add(userinfo);
+                }
+            }
+            catch (Exception exception)
+            {
+                Logger Err = new Logger();
+                Err.ErrorLog(HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["ErrorLogPath"]), exception.Message, exception.StackTrace);
+                userInfoDataContract.Message = "Error occured and logged please connect the Service Manager !";
+                userInfoDataContract.Status = false;
+            }
+            return userInfoDataContract;
+        }
     }
 }
