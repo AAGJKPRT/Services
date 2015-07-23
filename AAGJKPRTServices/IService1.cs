@@ -22,6 +22,11 @@ namespace AAGJKPRTServices
         [WebInvoke(Method = "GET", UriTemplate = "/Getuserinfo/{username}", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         UserInfoDataContract Getuserinfo(string username);
 
+        [OperationContract]
+        [WebInvoke(Method = "GET", UriTemplate = "/Validate_User/{username},{pwd}", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        UserInfoDataContract Validate_User(string username,string pwd);
+
+
         //Jai
         //Jai 2
         //Jai 3
