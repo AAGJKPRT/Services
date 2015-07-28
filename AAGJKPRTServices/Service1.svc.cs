@@ -3,6 +3,7 @@ using ErrorLogger;
 using ServiceDataContract;
 using System;
 using System.Configuration;
+using System.Data;
 using System.Web;
 
 namespace AAGJKPRTServices
@@ -11,6 +12,7 @@ namespace AAGJKPRTServices
     // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
     public class Service1 : IService1
     {
+        DbSqlParameterCollection objParamCollection = new DbSqlParameterCollection(); // Stored Proc collection object...
         public UserInfoDataContract GetUserlist()
         {
             UserInfoDataContract userInfoDataContract = new UserInfoDataContract();
@@ -62,6 +64,7 @@ namespace AAGJKPRTServices
                     userinfo.DOB = "02/04/1990";
                     userInfoDataContract.Data.Add(userinfo);
                 }
+
             }
             catch (Exception exception)
             {
@@ -117,6 +120,9 @@ namespace AAGJKPRTServices
                     userInfoDataContract.Status = true;
                     //userInfoDataContract.Data.Add(userinfo);
                 }
+                //DALUserInfo _DALUserInfo = new DALUserInfo();
+                //_DALUserInfo.AddProcParam_Getuserinfo
+                //DatabaseConnection.DoStored("usp_ProcName", objParamCollection);
             }
             catch (Exception exception)
             {
@@ -127,6 +133,21 @@ namespace AAGJKPRTServices
             }
             return userInfoDataContract;
         }
+
+        #region Private functions
+        //private void AddProcParam_Getuserinfo(userinfo userinfo)
+        //{
+        //    objParamCollection = new DbSqlParameterCollection();
+        //    userinfo = new userinfo();
+        //    DbSqlParameter _opModepara = new DbSqlParameter("@opMode", SqlDbType.VarChar, 25);
+        //    _opModepara.Value = userinfo.fname;
+        //    objParamCollection.Add(_opModepara);
+
+        //    DbSqlParameter _visiteridp = new DbSqlParameter("@VisitorID", SqlDbType.Decimal);
+        //    _visiteridp.Value = userinfo.age;
+        //    objParamCollection.Add(_visiteridp);
+        //}
+        #endregion
 
     }
 }

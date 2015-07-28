@@ -1,0 +1,10 @@
+28-07-2015 22:28:30 ==> Message: The ConnectionString property has not been initialized.Stack Trace:     at System.Data.SqlClient.SqlConnection.PermissionDemand()
+   at System.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at DataAccessLayer.DatabaseConnection.DoStored(String sqlStored, DbSqlParameterCollection sqlParams, Boolean transactional) in f:\E Drive of PC\Gaurav\AAGJKPRTServices\DataAccessLayer\Database.cs:line 268
+   at DataAccessLayer.DatabaseConnection.DoStored(String sqlStored, DbSqlParameterCollection sqlParams) in f:\E Drive of PC\Gaurav\AAGJKPRTServices\DataAccessLayer\Database.cs:line 256
+   at AAGJKPRTServices.Service1.Getuserinfo(String username) in f:\E Drive of PC\Gaurav\AAGJKPRTServices\AAGJKPRTServices\Service1.svc.cs:line 125

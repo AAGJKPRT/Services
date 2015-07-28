@@ -6,6 +6,7 @@ using System.Web;
 
 namespace ServiceDataContract
 {
+   
     [DataContract]
     public class UserInfoDataContract
     {
@@ -33,4 +34,7 @@ namespace ServiceDataContract
         public int age { get; set; }
         public string DOB { get; set; }
     }
+
+
+
 }
