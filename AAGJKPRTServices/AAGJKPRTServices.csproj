@@ -39,13 +39,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CampusDataServices, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\CampusDataServices.dll</HintPath>
-    </Reference>
-    <Reference Include="CrystalDatabase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\CrystalDatabase.dll</HintPath>
+    <Reference Include="DataAccessLayer">
+      <HintPath>..\DataAccessLayer\bin\Debug\DataAccessLayer.dll</HintPath>
     </Reference>
     <Reference Include="ErrorLogger">
       <HintPath>..\ErrorLogger\bin\Debug\ErrorLogger.dll</HintPath>
@@ -54,6 +49,9 @@
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceDataContract">
+      <HintPath>..\ServiceDataContract\bin\Debug\ServiceDataContract.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -81,7 +79,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataContract\UserInfoDataContract.cs" />
     <Compile Include="IService1.cs" />
     <Compile Include="Service1.svc.cs">
       <DependentUpon>Service1.svc</DependentUpon>

@@ -1,13 +1,8 @@
-﻿using AAGJKPRTServices.DataContract;
+﻿using DataAccessLayer;
 using ErrorLogger;
+using ServiceDataContract;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.ServiceModel.Web;
-using System.Text;
 using System.Web;
 
 namespace AAGJKPRTServices
@@ -25,7 +20,6 @@ namespace AAGJKPRTServices
                 //This is just to check the change in code base...
                 userInfoDataContract.Message = "Service Call !!!";
                 userInfoDataContract.Status = true;
-                DateTime dt = Convert.ToDateTime("0w204/1990ww");
                 for (int counter = 0; counter < 10; counter++)
                 {
                     userinfo = new userinfo();
@@ -33,6 +27,37 @@ namespace AAGJKPRTServices
                     userinfo.fname = "Gaurav";
                     userinfo.mname = "";
                     userinfo.lname = "Kaushik";
+                    userinfo.age = 24;
+                    userinfo.DOB = "02/04/1990";
+                    userInfoDataContract.Data.Add(userinfo);
+                }
+            }
+            catch (Exception exception)
+            {
+                Logger Err = new Logger();
+                Err.ErrorLog(HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["ErrorLogPath"]), exception.Message, exception.StackTrace);
+                userInfoDataContract.Message = "Error occured and logged please connect the Service Manager !";
+                userInfoDataContract.Status = false;
+            }
+            return userInfoDataContract;
+        }
+        public UserInfoDataContract GetUserlist(string param)
+        {
+            UserInfoDataContract userInfoDataContract = new UserInfoDataContract();
+            try
+            {
+                userinfo userinfo;
+                //This is just to check the change in code base...
+                userInfoDataContract.Message = "Service Call !!!";
+                userInfoDataContract.Status = true;
+                // DateTime dt = Convert.ToDateTime("0w204/1990ww");
+                for (int counter = 0; counter < 10; counter++)
+                {
+                    userinfo = new userinfo();
+                    userinfo.UserId = counter + 1;
+                    userinfo.fname = "jai";
+                    userinfo.mname = "";
+                    userinfo.lname = "";
                     userinfo.age = 24;
                     userinfo.DOB = "02/04/1990";
                     userInfoDataContract.Data.Add(userinfo);
@@ -103,49 +128,5 @@ namespace AAGJKPRTServices
             return userInfoDataContract;
         }
 
-        public UserInfoDataContract Validate_User(string username,string pwd)
-        {
-            UserInfoDataContract userInfoDataContract = new UserInfoDataContract();
-            userinfo userinfo;
-            try
-            {
-                if(username=="jai" && pwd=="123")
-                {
-                    userInfoDataContract.Message = "Hello Jai !";
-                    userInfoDataContract.Status = true;
-                    userinfo = new userinfo();
-                    userinfo.UserId = 2;
-                    userinfo.fname = "Jaipal";
-                    userinfo.mname = "";
-                    userinfo.lname = "Sajwan";
-                    userinfo.age = 24;
-                    userinfo.DOB = "01/09/1990";
-                    userInfoDataContract.Data.Add(userinfo);
-                }
-                else if(username!="jai" && pwd!="123")
-                {
-                    userInfoDataContract.Message = "User not found !";
-                    userInfoDataContract.Status = true;
-                }
-                else if(username!="jai")
-                {
-                    userInfoDataContract.Message = "Username is not correct !";
-                    userInfoDataContract.Status = true;
-                }
-                else if(pwd!="123")
-                {
-                    userInfoDataContract.Message = "Password is not correct !";
-                    userInfoDataContract.Status = true;
-                }
-            }
-            catch (Exception exception)
-            {
-                Logger Err = new Logger();
-                Err.ErrorLog(HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["ErrorLogPath"]), exception.Message, exception.StackTrace);
-                userInfoDataContract.Message = "Error occured and logged please connect the Service Manager !";
-                userInfoDataContract.Status = false;
-            }
-            return userInfoDataContract;
-        }
     }
 }
