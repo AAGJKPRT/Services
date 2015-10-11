@@ -82,7 +82,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataContract\UserInfoDataContract.cs" />
+    <Compile Include="ILogin.cs" />
     <Compile Include="IService1.cs" />
+    <Compile Include="ISupplier.cs" />
     <Compile Include="Service1.svc.cs">
       <DependentUpon>Service1.svc</DependentUpon>
     </Compile>
@@ -99,6 +101,12 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LMTDataContract\LMTDataContract.csproj">
+      <Project>{c3b7f3af-95a2-4068-a05b-94837479955f}</Project>
+      <Name>LMTDataContract</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

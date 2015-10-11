@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace AAGJKPRTServices
 {
     [ServiceContract]
-    public interface IService1
+    public interface IService1 : ISupplier
     {
 
         // TODO: Add your service operations here
@@ -24,7 +24,7 @@ namespace AAGJKPRTServices
 
         [OperationContract]
         [WebInvoke(Method = "GET", UriTemplate = "/Validate_User/{username},{pwd}", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        UserInfoDataContract Validate_User(string username,string pwd);
+        UserInfoDataContract Validate_User(string username, string pwd);
 
 
         //Jai

@@ -1,5 +1,6 @@
 ﻿using AAGJKPRTServices.DataContract;
 using ErrorLogger;
+using LMTDataContract;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -14,7 +15,7 @@ namespace AAGJKPRTServices
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in code, svc and config file together.
     // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
-    public class Service1 : IService1
+    public class Service1 : ISupplier, IService1
     {
         public UserInfoDataContract GetUserlist()
         {
@@ -103,13 +104,13 @@ namespace AAGJKPRTServices
             return userInfoDataContract;
         }
 
-        public UserInfoDataContract Validate_User(string username,string pwd)
+        public UserInfoDataContract Validate_User(string username, string pwd)
         {
             UserInfoDataContract userInfoDataContract = new UserInfoDataContract();
             userinfo userinfo;
             try
             {
-                if(username=="jai" && pwd=="123")
+                if (username == "jai" && pwd == "123")
                 {
                     userInfoDataContract.Message = "Hello Jai !";
                     userInfoDataContract.Status = true;
@@ -122,17 +123,17 @@ namespace AAGJKPRTServices
                     userinfo.DOB = "01/09/1990";
                     userInfoDataContract.Data.Add(userinfo);
                 }
-                else if(username!="jai" && pwd!="123")
+                else if (username != "jai" && pwd != "123")
                 {
                     userInfoDataContract.Message = "User not found !";
                     userInfoDataContract.Status = true;
                 }
-                else if(username!="jai")
+                else if (username != "jai")
                 {
                     userInfoDataContract.Message = "Username is not correct !";
                     userInfoDataContract.Status = true;
                 }
-                else if(pwd!="123")
+                else if (pwd != "123")
                 {
                     userInfoDataContract.Message = "Password is not correct !";
                     userInfoDataContract.Status = true;
@@ -147,5 +148,27 @@ namespace AAGJKPRTServices
             }
             return userInfoDataContract;
         }
+
+        public UserDetail InsertLabour()
+        {
+            UserDetail userDetail = new UserDetail();
+            try
+            {
+                userDetail.UserId = 1;
+                userDetail.UserName = "Gaurav Kaushik";
+                return userDetail;
+                // throw new NotImplementedException();
+            }
+            catch (Exception exception)
+            {
+                Logger Err = new Logger();
+                Err.ErrorLog(HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["ErrorLogPath"]), exception.Message, exception.StackTrace);
+                return userDetail;
+                //userInfoDataContract.Message = "Error occured and logged please connect the Service Manager !";
+                //userInfoDataContract.Status = false;
+            }
+        }
+
+
     }
 }
