@@ -78,11 +78,14 @@
     <Content Include="bin\CrystalDatabase.dll" />
     <Content Include="bin\Newtonsoft.Json.dll" />
     <Content Include="Service1.svc" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataContract\UserInfoDataContract.cs" />
     <Compile Include="ILogin.cs" />
+    <Compile Include="ILookUp.cs" />
     <Compile Include="IService1.cs" />
     <Compile Include="ISupplier.cs" />
     <Compile Include="Service1.svc.cs">
@@ -95,6 +98,7 @@
     <Folder Include="ErrorLog\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\PublishProfiles\servcies.easylabour.com.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -103,6 +107,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LMTDatabaseLayer\LMTDatabaseLayer.csproj">
+      <Project>{bf45602e-0924-4669-bd3e-04a3cb3cc709}</Project>
+      <Name>LMTDatabaseLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LMTDataContract\LMTDataContract.csproj">
       <Project>{c3b7f3af-95a2-4068-a05b-94837479955f}</Project>
       <Name>LMTDataContract</Name>

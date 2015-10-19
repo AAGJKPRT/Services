@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ErrorLogger", "ErrorLogger\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LMTDataContract", "LMTDataContract\LMTDataContract.csproj", "{C3B7F3AF-95A2-4068-A05B-94837479955F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LMTDatabaseLayer", "LMTDatabaseLayer\LMTDatabaseLayer.csproj", "{BF45602E-0924-4669-BD3E-04A3CB3CC709}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,10 @@ Global
 		{C3B7F3AF-95A2-4068-A05B-94837479955F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3B7F3AF-95A2-4068-A05B-94837479955F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3B7F3AF-95A2-4068-A05B-94837479955F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF45602E-0924-4669-BD3E-04A3CB3CC709}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF45602E-0924-4669-BD3E-04A3CB3CC709}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF45602E-0924-4669-BD3E-04A3CB3CC709}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF45602E-0924-4669-BD3E-04A3CB3CC709}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

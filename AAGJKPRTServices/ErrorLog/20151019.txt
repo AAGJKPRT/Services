@@ -1,0 +1,12 @@
+19-10-2015 15:00:59 ==> Message: Column 'Id' does not belong to table .Stack Trace:     at System.Data.DataRow.GetDataColumn(String columnName)
+   at System.Data.DataRow.get_Item(String columnName)
+   at AAGJKPRTServices.Service1.GetStateList() in d:\LMT_Services\Services\AAGJKPRTServices\Service1.svc.cs:line 29719-10-2015 15:45:31 ==> Message: Column 'LID' does not belong to table .Stack Trace:     at System.Data.DataRow.GetDataColumn(String columnName)
+   at System.Data.DataRow.get_Item(String columnName)
+   at AAGJKPRTServices.Service1.GetCityListbyStateID(String StateID) in d:\LMT_Services\Services\AAGJKPRTServices\Service1.svc.cs:line 34619-10-2015 15:46:51 ==> Message: Column 'LID' does not belong to table .Stack Trace:     at System.Data.DataRow.GetDataColumn(String columnName)
+   at System.Data.DataRow.get_Item(String columnName)
+   at AAGJKPRTServices.Service1.GetCityListbyStateID(String StateID) in d:\LMT_Services\Services\AAGJKPRTServices\Service1.svc.cs:line 34619-10-2015 15:52:17 ==> Message: The string was not recognized as a valid DateTime. There is an unknown word starting at index 1.Stack Trace:     at System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   at System.Convert.ToDateTime(String value)
+   at AAGJKPRTServices.Service1.GetUserlist() in d:\LMT_Services\Services\AAGJKPRTServices\Service1.svc.cs:line 3019-10-2015 16:21:50 ==> Message: Input string was not in a correct format.Stack Trace:     at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at System.Convert.ToInt32(String value)
+   at AAGJKPRTServices.Service1.GetLabourTypebySectorID(String SectorID) in d:\LMT_Services\Services\AAGJKPRTServices\Service1.svc.cs:line 414

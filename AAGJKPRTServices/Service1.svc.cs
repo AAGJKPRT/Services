@@ -1,22 +1,23 @@
-﻿using AAGJKPRTServices.DataContract;
-using ErrorLogger;
-using LMTDataContract;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Configuration;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.ServiceModel.Web;
-using System.Text;
 using System.Web;
+
+using AAGJKPRTServices.DataContract;
+using ErrorLogger;
+using LMTDatabaseLayer;
+using LMTDataContract;
+using System.Web.UI;
+using System.Data;
+
+
 
 namespace AAGJKPRTServices
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in code, svc and config file together.
     // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
-    public class Service1 : ISupplier, IService1
+    public class Service1 : IService1, ILogin, ISupplier, ILookUp
     {
+
         public UserInfoDataContract GetUserlist()
         {
             UserInfoDataContract userInfoDataContract = new UserInfoDataContract();
@@ -152,10 +153,12 @@ namespace AAGJKPRTServices
         public UserDetail InsertLabour()
         {
             UserDetail userDetail = new UserDetail();
+            User user = new User();
             try
             {
-                userDetail.UserId = 1;
-                userDetail.UserName = "Gaurav Kaushik";
+                user.UserId = 1;
+                user.UserName = "Gaurav Kaushik";
+                userDetail.Data.Add(user);
                 return userDetail;
                 // throw new NotImplementedException();
             }
@@ -170,5 +173,279 @@ namespace AAGJKPRTServices
         }
 
 
+        //From ILogin interface
+        public UserDetail ValidateSupplier(string username, string password)
+        {
+            UserDetail userDetail = new UserDetail();
+            User user = new User();
+            Login login = new Login();
+            try
+            {
+                if (username != "" && password != "")
+                {
+                    DataTable dt = login.ExecuteProcedure(username);
+                    if (dt.Rows.Count > 0)
+                    {
+                        if (password == Login.DecodeFrom64(dt.Rows[0]["Pwd"].ToString()))//Static function.
+                        {
+
+                            user.UserId = Convert.ToInt32(dt.Rows[0]["UserID"] == null ? 0 : dt.Rows[0]["UserID"]);
+                            user.UserName = dt.Rows[0]["UserName"].ToString();
+                            user.UserType = dt.Rows[0]["UserType"].ToString();
+                            user.UserEmail = dt.Rows[0]["EmailID"].ToString();
+                            user.UserCategory = dt.Rows[0]["UserCategory"].ToString();
+                            user.RedirectingUrl = "/MasterPages/SupplierMenuboard.aspx";
+                            userDetail.Data.Add(user);
+                            userDetail.Status = true;
+                            userDetail.Message = "Welcome to Easy labour Supplier Panel";
+                        }
+                        else
+                        {
+                            userDetail.Status = false;
+                            userDetail.Message = "Invalid Password !";
+                        }
+                    }
+                    else
+                    {
+                        userDetail.Status = false;
+                        userDetail.Message = "Invalid UserName !";
+                    }
+                }
+                else
+                {
+                    userDetail.Status = false;
+                    userDetail.Message = "Username and password can not be blank !";
+                }
+            }
+            catch (Exception exception)
+            {
+                userDetail.Status = false;
+                userDetail.Message = "Opps something went worng, please check with application admin !";
+                Logger Err = new Logger();
+                Err.ErrorLog(HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["ErrorLogPath"]), exception.Message, exception.StackTrace);
+            }
+            return userDetail;
+        }
+        public LabourDetails GetLabourList()
+        {
+            LabourDetails labourDetails = new LabourDetails();
+            Labour labour;
+            SupplierDAL supplierDAL = new SupplierDAL();
+            try
+            {
+                DataTable dt = supplierDAL.GetLaboursList();
+                if (dt.Rows.Count > 0)
+                {
+
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        labour = new Labour();
+                        labour.CurrentPincode = Convert.ToInt32(dr["CurrentPincode"] == null ? 0 : dr["CurrentPincode"]);
+                        labour.Doc1_URL = dr["Doc1_URL"].ToString().TrimStart('.');
+                        labour.Doc2_URL = dr["Doc2_URL"].ToString().TrimStart('.');
+                        labour.Doc3_URL = dr["Doc3_URL"].ToString().TrimStart('.');
+                        labour.Doc4_URL = dr["Doc4_URL"].ToString().TrimStart('.');
+                        labour.Experience = Convert.ToInt32(dr["Experience"] == null ? 0 : dr["Experience"]);
+                        labour.FullName = dr["FullName"].ToString();
+                        labour.Image_URL = dr["Image_URL"].ToString().TrimStart('.');
+                        labour.LabourCode = dr["LabourCode"].ToString();
+                        labour.LabourID = Convert.ToInt32(dr["Experience"] == null ? 0 : dr["Experience"]);
+                        labour.LabourType = dr["LabourType"].ToString();
+                        labour.Lbr_Skill = dr["Lbr_Skill"].ToString();
+                        labour.SectorType = dr["SectorType"].ToString();
+                        labour.Specialization = dr["Specialization"].ToString();
+                        labour.SupplierID = Convert.ToInt32(dr["SupplierID"] == null ? 0 : dr["SupplierID"]);
+                        labour.SupplierName = dr["SupplierName"].ToString();
+                        string Verification = dr["Verification"] == null ? "0" : dr["Verification"].ToString();
+                        labour.Verification = Verification == "1" ? true : false;
+                        labour.Wages = Convert.ToInt32(dr["Wages"] == null ? 0 : dr["Experience"]);
+                        labourDetails.Data.Add(labour);
+                    }
+                    labourDetails.ApplicationUrl = "http://dev.easylabour.com";
+                    labourDetails.LabourCount = dt.Rows.Count;
+                    labourDetails.Status = true;
+                    labourDetails.Message = "List of Labours !";
+                }
+                else
+                {
+                    labourDetails.Status = false;
+                    labourDetails.Message = "No Labour exists !";
+                }
+            }
+            catch (Exception exception)
+            {
+                labourDetails.Status = false;
+                labourDetails.Message = "Opps something went worng, please check with application admin !";
+                Logger Err = new Logger();
+                Err.ErrorLog(HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["ErrorLogPath"]), exception.Message, exception.StackTrace);
+            }
+            return labourDetails;
+        }
+        public LookupList GetStateList()
+        {
+            LookupList stateList = new LookupList();
+            Lookup stateLookup;
+            LookUpDAL lookUpDAL = new LookUpDAL();
+            try
+            {
+                DataTable dt = lookUpDAL.GetStateList();
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        stateLookup = new Lookup();
+                        stateLookup.Id = Convert.ToInt32(dr["LID"] == null ? 0 : dr["LID"]);
+                        stateLookup.Name = dr["LDESC"].ToString();
+                        stateList.Data.Add(stateLookup);
+                    }
+                    stateList.Status = true;
+                    stateList.Message = "List of States !";
+                }
+                else
+                {
+                    stateList.Status = false;
+                    stateList.Message = "No State exists !";
+                }
+            }
+            catch (Exception exception)
+            {
+                stateList.Status = false;
+                stateList.Message = "Opps something went worng, please check with application admin !";
+                Logger Err = new Logger();
+                Err.ErrorLog(HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["ErrorLogPath"]), exception.Message, exception.StackTrace);
+            }
+            return stateList;
+        }
+        public LookupList GetCityListbyStateID(string StateID)
+        {
+            int IntStateID;
+            LookupList CitylookupList = new LookupList();
+            Lookup cityLookup;
+            LookUpDAL lookUpDAL = new LookUpDAL();
+            try
+            {
+                IntStateID = Convert.ToInt32(StateID);
+            }
+            catch (Exception exception)
+            {
+                CitylookupList.Status = false;
+                CitylookupList.Message = "Opps something went worng, with supplied Param !";
+                Logger Err = new Logger();
+                Err.ErrorLog(HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["ErrorLogPath"]), exception.Message, exception.StackTrace);
+                return CitylookupList;
+            }
+            try
+            {
+                DataTable dt = lookUpDAL.GetCityListbyStateID(IntStateID);
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        cityLookup = new Lookup();
+                        cityLookup.Id = Convert.ToInt32(dr["ID"] == null ? 0 : dr["ID"]);
+                        cityLookup.Name = dr["Name"].ToString();
+                        CitylookupList.Data.Add(cityLookup);
+                    }
+                    CitylookupList.Status = true;
+                    CitylookupList.Message = "List of cities !";
+                }
+                else
+                {
+                    CitylookupList.Status = false;
+                    CitylookupList.Message = "No city exists !";
+                }
+            }
+            catch (Exception exception)
+            {
+                CitylookupList.Status = false;
+                CitylookupList.Message = "Opps something went worng, please check with application admin !";
+                Logger Err = new Logger();
+                Err.ErrorLog(HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["ErrorLogPath"]), exception.Message, exception.StackTrace);
+            }
+            return CitylookupList;
+        }
+        public LookupList GetSectorTypeList()
+        {
+            LookupList SectorTypeList = new LookupList();
+            Lookup SectorTypeLookup;
+            LookUpDAL lookUpDAL = new LookUpDAL();
+            try
+            {
+                DataTable dt = lookUpDAL.GetSectorType();
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        SectorTypeLookup = new Lookup();
+                        SectorTypeLookup.Id = Convert.ToInt32(dr["ID"] == null ? 0 : dr["ID"]);
+                        SectorTypeLookup.Name = dr["Name"].ToString();
+                        SectorTypeList.Data.Add(SectorTypeLookup);
+                    }
+                    SectorTypeList.Status = true;
+                    SectorTypeList.Message = "List of Sector Type !";
+                }
+                else
+                {
+                    SectorTypeList.Status = false;
+                    SectorTypeList.Message = "No Sector Type exists !";
+                }
+            }
+            catch (Exception exception)
+            {
+                SectorTypeList.Status = false;
+                SectorTypeList.Message = "Opps something went worng, please check with application admin !";
+                Logger Err = new Logger();
+                Err.ErrorLog(HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["ErrorLogPath"]), exception.Message, exception.StackTrace);
+            }
+            return SectorTypeList;
+        }
+        public LookupList GetLabourTypebySectorID(string SectorID)
+        {
+            int IntSectorID;
+            LookupList LabourTypelookupList = new LookupList();
+            Lookup LabourTypeLookup;
+            LookUpDAL lookUpDAL = new LookUpDAL();
+            try
+            {
+                IntSectorID = Convert.ToInt32(SectorID);
+            }
+            catch (Exception exception)
+            {
+                LabourTypelookupList.Status = false;
+                LabourTypelookupList.Message = "Opps something went worng, with supplied Param !";
+                Logger Err = new Logger();
+                Err.ErrorLog(HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["ErrorLogPath"]), exception.Message, exception.StackTrace);
+                return LabourTypelookupList;
+            }
+            try
+            {
+                DataTable dt = lookUpDAL.GetLabourTypebyID(IntSectorID);
+                if (dt.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        LabourTypeLookup = new Lookup();
+                        LabourTypeLookup.Id = Convert.ToInt32(dr["ID"] == null ? 0 : dr["ID"]);
+                        LabourTypeLookup.Name = dr["Name"].ToString();
+                        LabourTypelookupList.Data.Add(LabourTypeLookup);
+                    }
+                    LabourTypelookupList.Status = true;
+                    LabourTypelookupList.Message = "List of Labour Type !";
+                }
+                else
+                {
+                    LabourTypelookupList.Status = false;
+                    LabourTypelookupList.Message = "No Labour Type exists !";
+                }
+            }
+            catch (Exception exception)
+            {
+                LabourTypelookupList.Status = false;
+                LabourTypelookupList.Message = "Opps something went worng, please check with application admin !";
+                Logger Err = new Logger();
+                Err.ErrorLog(HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["ErrorLogPath"]), exception.Message, exception.StackTrace);
+            }
+            return LabourTypelookupList;
+        }
     }
 }

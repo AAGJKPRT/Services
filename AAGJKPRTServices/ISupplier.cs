@@ -11,11 +11,14 @@ using System.Threading.Tasks;
 namespace AAGJKPRTServices
 {
     [ServiceContract]
-    public interface ISupplier
+    public interface ISupplier 
     {
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/InsertLabour/", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        [WebInvoke(Method = "GET", UriTemplate = "/InsertNewLabour/", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         UserDetail InsertLabour();
 
+        [OperationContract]
+        [WebInvoke(Method = "GET", UriTemplate = "/GetLabourList/", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        LabourDetails GetLabourList();
     }
 }
