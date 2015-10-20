@@ -17,7 +17,7 @@ namespace LMTDataContract
         public bool Status { get; set; }
 
         [DataMember(Order = 2)]
-        public int LabourCount { get; set; }
+        public int Count { get; set; }
 
         [DataMember(Order = 3)]
         public string ApplicationUrl { get; set; }

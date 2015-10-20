@@ -88,6 +88,7 @@
     <Compile Include="ILookUp.cs" />
     <Compile Include="IService1.cs" />
     <Compile Include="ISupplier.cs" />
+    <Compile Include="IUpload.cs" />
     <Compile Include="Service1.svc.cs">
       <DependentUpon>Service1.svc</DependentUpon>
     </Compile>

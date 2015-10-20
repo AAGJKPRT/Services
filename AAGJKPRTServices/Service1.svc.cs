@@ -8,6 +8,9 @@ using LMTDatabaseLayer;
 using LMTDataContract;
 using System.Web.UI;
 using System.Data;
+using System.Web.Hosting;
+using System.IO;
+using System.ServiceModel.Web;
 
 
 
@@ -15,7 +18,7 @@ namespace AAGJKPRTServices
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in code, svc and config file together.
     // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
-    public class Service1 : IService1, ILogin, ISupplier, ILookUp
+    public class Service1 : IService1, ILogin, ISupplier, ILookUp,IUpload
     {
 
         public UserInfoDataContract GetUserlist()
@@ -262,7 +265,7 @@ namespace AAGJKPRTServices
                         labourDetails.Data.Add(labour);
                     }
                     labourDetails.ApplicationUrl = "http://dev.easylabour.com";
-                    labourDetails.LabourCount = dt.Rows.Count;
+                    labourDetails.Count = dt.Rows.Count;
                     labourDetails.Status = true;
                     labourDetails.Message = "List of Labours !";
                 }
@@ -446,6 +449,38 @@ namespace AAGJKPRTServices
                 Err.ErrorLog(HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["ErrorLogPath"]), exception.Message, exception.StackTrace);
             }
             return LabourTypelookupList;
+        }
+
+        public System.IO.Stream DownloadFile(string fileName, string fileExtension)
+        {
+            string downloadFilePath = Path.Combine(HostingEnvironment.MapPath("~/FileServer/Extracts"), fileName + "." + fileExtension);
+
+            //Write logic to create the file
+            File.Create(downloadFilePath);
+
+            String headerInfo = "attachment; filename=" + fileName + "." + fileExtension;
+            WebOperationContext.Current.OutgoingResponse.Headers["Content-Disposition"] = headerInfo;
+
+            WebOperationContext.Current.OutgoingResponse.ContentType = "application/octet-stream";
+
+            return File.OpenRead(downloadFilePath);
+        }
+
+        public void UploadFile(string fileName, System.IO.Stream stream)
+        {
+            string FilePath = Path.Combine(HostingEnvironment.MapPath("~/FileServer/Uploads"), fileName);
+
+            int length = 0;
+            using (FileStream writer = new FileStream(FilePath, FileMode.Create))
+            {
+                int readCount;
+                var buffer = new byte[8192];
+                while ((readCount = stream.Read(buffer, 0, buffer.Length)) != 0)
+                {
+                    writer.Write(buffer, 0, readCount);
+                    length += readCount;
+                }
+            }
         }
     }
 }
