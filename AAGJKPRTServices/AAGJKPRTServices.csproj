@@ -97,6 +97,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="ErrorLog\" />
+    <Folder Include="LabourImage\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\servcies.easylabour.com.pubxml" />

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LMTDataContract;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,11 +14,11 @@ namespace AAGJKPRTServices
     public interface IUpload
     {
         [OperationContract]
-        [WebGet(UriTemplate = "File/{fileName},{fileExtension}")]
+        [WebInvoke(Method = "GET", UriTemplate = "/File/{fileName},{fileExtension}", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         Stream DownloadFile(string fileName, string fileExtension);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = "/UploadFile?fileName={fileName}")]
-        void UploadFile(string fileName, Stream stream);
+        [WebInvoke(Method = "POST", UriTemplate = "UploadFile", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
+        FileUpload UploadFile(Stream stream);
     }
 }

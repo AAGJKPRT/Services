@@ -2,6 +2,7 @@
 using LMTDataContract;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Web;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 namespace AAGJKPRTServices
 {
     [ServiceContract]
-    public interface IService1 : ISupplier, ILogin, ILookUp
+    public interface IService1 : ISupplier, ILogin, ILookUp, IUpload
     {
 
         // TODO: Add your service operations here
@@ -26,7 +27,9 @@ namespace AAGJKPRTServices
         [OperationContract]
         [WebInvoke(Method = "GET", UriTemplate = "/Validate_User/{username},{pwd}", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         UserInfoDataContract Validate_User(string username, string pwd);
-      
+
+
+       
 
     }
 }

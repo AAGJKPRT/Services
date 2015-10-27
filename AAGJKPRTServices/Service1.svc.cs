@@ -11,6 +11,7 @@ using System.Data;
 using System.Web.Hosting;
 using System.IO;
 using System.ServiceModel.Web;
+using System.Net;
 
 
 
@@ -18,7 +19,7 @@ namespace AAGJKPRTServices
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in code, svc and config file together.
     // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
-    public class Service1 : IService1, ILogin, ISupplier, ILookUp,IUpload
+    public class Service1 : IService1, ILogin, ISupplier, ILookUp, IUpload
     {
 
         public UserInfoDataContract GetUserlist()
@@ -437,7 +438,7 @@ namespace AAGJKPRTServices
                 }
                 else
                 {
-                    LabourTypelookupList.Status = false;
+                    LabourTypelookupList.Status = true;
                     LabourTypelookupList.Message = "No Labour Type exists !";
                 }
             }
@@ -466,21 +467,39 @@ namespace AAGJKPRTServices
             return File.OpenRead(downloadFilePath);
         }
 
-        public void UploadFile(string fileName, System.IO.Stream stream)
+        public FileUpload UploadFile(Stream stream)
         {
-            string FilePath = Path.Combine(HostingEnvironment.MapPath("~/FileServer/Uploads"), fileName);
+            FileUpload fileUpload = new FileUpload();
 
-            int length = 0;
-            using (FileStream writer = new FileStream(FilePath, FileMode.Create))
+            try
             {
-                int readCount;
-                var buffer = new byte[8192];
-                while ((readCount = stream.Read(buffer, 0, buffer.Length)) != 0)
+                //string FilePath = "D://LMT_Services//Services//AAGJKPRTServices//LabourImage//abc.txt";
+
+                string FilePath = ConfigurationManager.AppSettings["LabourImagePath"].ToString();//"C://HostingSpaces//oadenterprises//dev.easylabour.com//wwwroot//labourimages";
+                FilePath = FilePath + Guid.NewGuid() + ".jpg";
+                int length = 0;
+                using (FileStream writer = new FileStream(FilePath, FileMode.Create))
                 {
-                    writer.Write(buffer, 0, readCount);
-                    length += readCount;
+                    int readCount;
+                    var buffer = new byte[8192];
+                    while ((readCount = stream.Read(buffer, 0, buffer.Length)) != 0)
+                    {
+                        writer.Write(buffer, 0, readCount);
+                        length += readCount;
+                    }
                 }
+                fileUpload.Status = true;
+                fileUpload.Message = "File uploaded successfully";
             }
+            catch (Exception exception)
+            {
+                fileUpload.Status = false;
+                fileUpload.Message = "Opps something went worng, please check with application admin !";
+                Logger Err = new Logger();
+                Err.ErrorLog(HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["ErrorLogPath"]), exception.Message, exception.StackTrace);
+            }
+            return fileUpload;
         }
+
     }
 }

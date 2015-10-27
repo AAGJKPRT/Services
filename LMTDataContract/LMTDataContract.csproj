@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileUpload.cs" />
     <Compile Include="LabourDetails.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StateList.cs" />
