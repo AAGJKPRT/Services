@@ -474,9 +474,10 @@ namespace AAGJKPRTServices
             try
             {
                 //string FilePath = "D://LMT_Services//Services//AAGJKPRTServices//LabourImage//abc.txt";
-
+                System.Net.WebHeaderCollection webHeaderCollection = WebOperationContext.Current.IncomingRequest.Headers;
+                string fileextn = webHeaderCollection["FileExtension"].ToString();
                 string FilePath = ConfigurationManager.AppSettings["LabourImagePath"].ToString();//"C://HostingSpaces//oadenterprises//dev.easylabour.com//wwwroot//labourimages";
-                FilePath = FilePath + Guid.NewGuid() + ".jpg";
+                FilePath = FilePath + Guid.NewGuid() + fileextn;
                 int length = 0;
                 using (FileStream writer = new FileStream(FilePath, FileMode.Create))
                 {
