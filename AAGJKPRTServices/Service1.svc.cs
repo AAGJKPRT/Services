@@ -154,25 +154,50 @@ namespace AAGJKPRTServices
             return userInfoDataContract;
         }
 
-        public UserDetail InsertLabour()
+        public LabourDetails InsertLabour(string LabourCode, string FullName, string FatherName, string username, string CurrentAddress, string CurrentStateID, string CurrentCityID, string CurrentPincode, string PermanentAddress, string PermanentStateID, string PermanentCityID, string PermanentPincode, string PhoneNo, string SectorType, string LabourType, string Specialization, string Experience, string Wages, string Lbr_Skill, string Bool_Verification, string SupplierID, string Belonging1, string Belonging2, string Belonging3, string Belonging4)
         {
-            UserDetail userDetail = new UserDetail();
-            User user = new User();
+            LabourDetails labourDetails = new LabourDetails();
+            Labour labour = new Labour();
+            SupplierDAL supplierDAL = new SupplierDAL();
             try
             {
-                user.UserId = 1;
-                user.UserName = "Gaurav Kaushik";
-                userDetail.Data.Add(user);
-                return userDetail;
-                // throw new NotImplementedException();
+                //labour.LabourID = csLabourRegistration.GetLabourMaxId();
+                labour.LabourCode = LabourCode.ToUpper() == "NULL" ? "" : LabourCode;
+                labour.FullName = FullName.ToUpper() == "NULL" ? "" : FullName;
+                labour.FatherName = FatherName.ToUpper() == "NULL" ? "" : FatherName;
+                labour.CurrentAddress = CurrentAddress.ToUpper() == "NULL" ? "" : CurrentAddress;
+                labour.CurrentStateID = CurrentStateID.ToUpper() == "NULL" ? 0 : Convert.ToInt32(CurrentStateID); ;
+                labour.CurrentCityID = CurrentCityID.ToUpper() == "NULL" ? 0 : Convert.ToInt32(CurrentCityID); ;
+                labour.CurrentPincode = CurrentPincode.ToUpper() == "NULL" ? 0 : Convert.ToInt32(CurrentPincode);
+                labour.PermanentAddress = PermanentAddress.ToUpper() == "NULL" ? "" : PermanentAddress;
+                labour.PermanentStateID = PermanentStateID.ToUpper() == "NULL" ? 0 : Convert.ToInt32(PermanentStateID);
+                labour.PermanentCityID = PermanentCityID.ToUpper() == "NULL" ? 0 : Convert.ToInt32(PermanentCityID); ;
+                labour.PermanentPincode = PermanentPincode.ToUpper() == "NULL" ? 0 : Convert.ToInt32(PermanentPincode);
+                labour.PhoneNo = PhoneNo.ToUpper() == "NULL" ? "0" : PhoneNo;
+                labour.SectorType = SectorType.ToUpper() == "NULL" ? "0" : SectorType;
+                labour.LabourType = LabourType.ToUpper() == "NULL" ? "0" : LabourType;
+                labour.Specialization = Specialization.ToUpper() == "NULL" ? "0" : Specialization;
+                labour.Experience = Experience.ToUpper() == "NULL" ? 0 : Convert.ToInt32(Experience);
+                labour.Wages = Wages.ToUpper() == "NULL" ? 0 : Convert.ToInt32(Wages);
+                labour.Lbr_Skill = Lbr_Skill.ToUpper() == "NULL" ? "" : Lbr_Skill;
+                labour.Verification = Bool_Verification.ToUpper() == "NULL" ? false : true;
+                labour.SupplierID = SupplierID.ToUpper() == "NULL" ? 0 : Convert.ToInt32(SupplierID);
+                labour.Belonging1 = Belonging1.ToUpper() == "NULL" ? "0" : Belonging1;
+                labour.Belonging2 = Belonging2.ToUpper() == "NULL" ? "0" : Belonging2;
+                labour.Belonging3 = Belonging3.ToUpper() == "NULL" ? "0" : Belonging3;
+                labour.Belonging4 = Belonging4.ToUpper() == "NULL" ? "0" : Belonging4;
+                supplierDAL.InsertNewLabourData("INSERT", labour);
+                labourDetails.Message = "Labour inserted successfully !";
+                labourDetails.Status = true;
+                return labourDetails;
             }
             catch (Exception exception)
             {
                 Logger Err = new Logger();
                 Err.ErrorLog(HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["ErrorLogPath"]), exception.Message, exception.StackTrace);
-                return userDetail;
-                //userInfoDataContract.Message = "Error occured and logged please connect the Service Manager !";
-                //userInfoDataContract.Status = false;
+                labourDetails.Message = "Error occured and logged please connect the Service Manager !";
+                labourDetails.Status = false;
+                return labourDetails;
             }
         }
 

@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 namespace AAGJKPRTServices
 {
     [ServiceContract]
-    public interface ISupplier 
+    public interface ISupplier
     {
         [OperationContract]
-        [WebInvoke(Method = "GET", UriTemplate = "/InsertNewLabour/", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        UserDetail InsertLabour();
+        [WebInvoke(Method = "GET", UriTemplate = "/InsertLabour/{LabourCode},{FullName},{FatherName},{username},{CurrentAddress},{CurrentStateID},{CurrentCityID},{CurrentPincode},{PermanentAddress},{PermanentStateID},{PermanentCityID},{PermanentPincode},{PhoneNo},{SectorType},{LabourType},{Specialization},{Experience},{Wages},{Lbr_Skill},{Bool_Verification},{SupplierID},{Belonging1},{Belonging2},{Belonging3},{Belonging4}", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        LabourDetails InsertLabour(string LabourCode, string FullName, string FatherName, string username, string CurrentAddress, string CurrentStateID, string CurrentCityID, string CurrentPincode, string PermanentAddress, string PermanentStateID, string PermanentCityID, string PermanentPincode, string PhoneNo, string SectorType, string LabourType, string Specialization, string Experience, string Wages, string Lbr_Skill, string Bool_Verification, string SupplierID, string Belonging1, string Belonging2, string Belonging3, string Belonging4);
 
         [OperationContract]
         [WebInvoke(Method = "GET", UriTemplate = "/GetLabourList/", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]

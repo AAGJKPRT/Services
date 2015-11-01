@@ -34,18 +34,38 @@ namespace LMTDataContract
     public class Labour
     {
         public int LabourID { get; set; }
-        public string FullName { get; set; }
         public string LabourCode { get; set; }
+        public string FullName { get; set; }
+        public string FatherName { get; set; }
+
+
+        public string CurrentAddress { get; set; }
+        public int CurrentStateID { get; set; }
+        public int CurrentCityID { get; set; }
         public int CurrentPincode { get; set; }
+
+        public string PermanentAddress { get; set; }
+        public int PermanentStateID { get; set; }
+        public int PermanentCityID { get; set; }
+        public int PermanentPincode { get; set; }
+
+        public string PhoneNo { get; set; }
         public string SectorType { get; set; }
+        public string LabourType { get; set; }
         public string Specialization { get; set; }
         public int Experience { get; set; }
-        public string LabourType { get; set; }
-        public bool Verification { get; set; }
-        public int SupplierID { get; set; }
-        public string SupplierName { get; set; }
         public int Wages { get; set; }
         public string Lbr_Skill { get; set; }
+        public bool Verification { get; set; }
+
+        public int SupplierID { get; set; }
+        public string SupplierName { get; set; }
+
+        public string Belonging1 { get; set; }
+        public string Belonging2 { get; set; }
+        public string Belonging3 { get; set; }
+        public string Belonging4 { get; set; }
+
         public string Image_URL { get; set; }
         public string Doc1_URL { get; set; }
         public string Doc2_URL { get; set; }
