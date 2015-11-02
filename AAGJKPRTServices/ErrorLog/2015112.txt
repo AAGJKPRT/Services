@@ -1,0 +1,1 @@
+02-11-2015 15:10:54 ==> Message: Object reference not set to an instance of an object.Stack Trace:     at AAGJKPRTServices.Service1.UploadFile(Stream stream) in d:\LMT_Services\Services\AAGJKPRTServices\Service1.svc.cs:line 505

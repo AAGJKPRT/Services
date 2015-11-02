@@ -17,6 +17,15 @@ namespace LMTDataContract
         [DataMember]
         public bool Status { get; set; }
 
+        [DataMember]
+        public string FileUrl { get; set; }
+
+        [DataMember]
+        public string FileExtension { get; set; }
+
+        [DataMember]
+        public string ApplicationUrl { get; set; }
+
 
     }
     public class FileUploadFields

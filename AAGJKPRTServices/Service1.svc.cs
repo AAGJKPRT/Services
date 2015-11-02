@@ -159,6 +159,7 @@ namespace AAGJKPRTServices
             LabourDetails labourDetails = new LabourDetails();
             Labour labour = new Labour();
             SupplierDAL supplierDAL = new SupplierDAL();
+            //System.Net.WebHeaderCollection webHeaderCollection = WebOperationContext.Current.IncomingRequest.Headers;
             try
             {
                 //labour.LabourID = csLabourRegistration.GetLabourMaxId();
@@ -186,6 +187,13 @@ namespace AAGJKPRTServices
                 labour.Belonging2 = Belonging2.ToUpper() == "NULL" ? "0" : Belonging2;
                 labour.Belonging3 = Belonging3.ToUpper() == "NULL" ? "0" : Belonging3;
                 labour.Belonging4 = Belonging4.ToUpper() == "NULL" ? "0" : Belonging4;
+
+                //labour.Image_URL = webHeaderCollection["Image_URL"].ToString();
+                //labour.Doc1_URL = webHeaderCollection["Doc1_URL"].ToString();
+                //labour.Doc2_URL = webHeaderCollection["Doc2_URL"].ToString();
+                //labour.Doc3_URL = webHeaderCollection["Doc3_URL"].ToString();
+                //labour.Doc4_URL = webHeaderCollection["Doc4_URL"].ToString();
+
                 supplierDAL.InsertNewLabourData("INSERT", labour);
                 labourDetails.Message = "Labour inserted successfully !";
                 labourDetails.Status = true;
@@ -287,10 +295,10 @@ namespace AAGJKPRTServices
                         labour.SupplierName = dr["SupplierName"].ToString();
                         string Verification = dr["Verification"] == null ? "0" : dr["Verification"].ToString();
                         labour.Verification = Verification == "1" ? true : false;
-                        labour.Wages = Convert.ToInt32(dr["Wages"] == null ? 0 : dr["Experience"]);
+                        labour.Wages = Convert.ToInt32(dr["Wages"] == null ? 0 : dr["Wages"]);
                         labourDetails.Data.Add(labour);
                     }
-                    labourDetails.ApplicationUrl = "http://dev.easylabour.com";
+                    labourDetails.ApplicationUrl = ConfigurationManager.AppSettings["ApplicationUrl"].ToString();//"http://dev.easylabour.com";
                     labourDetails.Count = dt.Rows.Count;
                     labourDetails.Status = true;
                     labourDetails.Message = "List of Labours !";
@@ -495,14 +503,15 @@ namespace AAGJKPRTServices
         public FileUpload UploadFile(Stream stream)
         {
             FileUpload fileUpload = new FileUpload();
-
             try
             {
                 //string FilePath = "D://LMT_Services//Services//AAGJKPRTServices//LabourImage//abc.txt";
                 System.Net.WebHeaderCollection webHeaderCollection = WebOperationContext.Current.IncomingRequest.Headers;
                 string fileextn = webHeaderCollection["FileExtension"].ToString();
-                string FilePath = ConfigurationManager.AppSettings["LabourImagePath"].ToString();//"C://HostingSpaces//oadenterprises//dev.easylabour.com//wwwroot//labourimages";
-                FilePath = FilePath + Guid.NewGuid() + fileextn;
+                string FilePath = "";// ConfigurationManager.AppSettings["LabourImagePath"].ToString();//"C://HostingSpaces//oadenterprises//dev.easylabour.com//wwwroot//labourimages";
+                FilePath = webHeaderCollection["FileUploadType"].ToString() == "Document" ? ConfigurationManager.AppSettings["LabourDocPath"].ToString() : ConfigurationManager.AppSettings["LabourImagePath"].ToString();
+                string filename = Guid.NewGuid() + fileextn;
+                FilePath = FilePath + filename;
                 int length = 0;
                 using (FileStream writer = new FileStream(FilePath, FileMode.Create))
                 {
@@ -514,8 +523,11 @@ namespace AAGJKPRTServices
                         length += readCount;
                     }
                 }
+                fileUpload.ApplicationUrl = ConfigurationManager.AppSettings["ApplicationUrl"].ToString();
+                fileUpload.FileUrl = webHeaderCollection["FileUploadType"].ToString() == "Document" ? @"/LabourDocs/" + filename : @"/labourimages/" + filename;
+                fileUpload.FileExtension = fileextn;
                 fileUpload.Status = true;
-                fileUpload.Message = "File uploaded successfully";
+                fileUpload.Message = "File uploaded successfully !";
             }
             catch (Exception exception)
             {
