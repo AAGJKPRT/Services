@@ -181,19 +181,19 @@ namespace LMTDatabaseLayer
             VarificationPara.Value = labour.Verification == true ? "1" : "0";//as per the demand of the time I can't change the database col type from char to bool as it has depandency in web portal also.
             objParamCollection.Add(VarificationPara);
             DbSqlParameter ImageUrlPara = new DbSqlParameter("@Image_Url", SqlDbType.VarChar);
-            ImageUrlPara.Value = "";//To be filled from file upload service instance
+            ImageUrlPara.Value = labour.Image_URL;
             objParamCollection.Add(ImageUrlPara);
             DbSqlParameter DocUrl1Para = new DbSqlParameter("@Doc1_Url", SqlDbType.VarChar);
-            DocUrl1Para.Value = "";//To be filled from file upload service instance
+            DocUrl1Para.Value = labour.Doc1_URL;
             objParamCollection.Add(DocUrl1Para);
             DbSqlParameter DocUrl2Para = new DbSqlParameter("@Doc2_Url", SqlDbType.VarChar);
-            DocUrl2Para.Value = "";//To be filled from file upload service instance
+            DocUrl2Para.Value = labour.Doc2_URL;
             objParamCollection.Add(DocUrl2Para);
             DbSqlParameter DocUrl3Para = new DbSqlParameter("@Doc3_Url", SqlDbType.VarChar);
-            DocUrl3Para.Value = "";//To be filled from file upload service instance
+            DocUrl3Para.Value = labour.Doc3_URL;
             objParamCollection.Add(DocUrl3Para);
             DbSqlParameter DocUrl4Para = new DbSqlParameter("@Doc4_Url", SqlDbType.VarChar);
-            DocUrl4Para.Value = "";//To be filled from file upload service instance
+            DocUrl4Para.Value = labour.Doc4_URL;
             objParamCollection.Add(DocUrl4Para);
             DbSqlParameter SupplierIDPara = new DbSqlParameter("@SupplierID", SqlDbType.Int);
             SupplierIDPara.Value = labour.SupplierID;

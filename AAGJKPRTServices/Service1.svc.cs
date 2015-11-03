@@ -159,7 +159,7 @@ namespace AAGJKPRTServices
             LabourDetails labourDetails = new LabourDetails();
             Labour labour = new Labour();
             SupplierDAL supplierDAL = new SupplierDAL();
-            //System.Net.WebHeaderCollection webHeaderCollection = WebOperationContext.Current.IncomingRequest.Headers;
+            System.Net.WebHeaderCollection webHeaderCollection = WebOperationContext.Current.IncomingRequest.Headers;
             try
             {
                 //labour.LabourID = csLabourRegistration.GetLabourMaxId();
@@ -188,11 +188,11 @@ namespace AAGJKPRTServices
                 labour.Belonging3 = Belonging3.ToUpper() == "NULL" ? "0" : Belonging3;
                 labour.Belonging4 = Belonging4.ToUpper() == "NULL" ? "0" : Belonging4;
 
-                //labour.Image_URL = webHeaderCollection["Image_URL"].ToString();
-                //labour.Doc1_URL = webHeaderCollection["Doc1_URL"].ToString();
-                //labour.Doc2_URL = webHeaderCollection["Doc2_URL"].ToString();
-                //labour.Doc3_URL = webHeaderCollection["Doc3_URL"].ToString();
-                //labour.Doc4_URL = webHeaderCollection["Doc4_URL"].ToString();
+                labour.Image_URL = webHeaderCollection["Image_URL"] == null ? "" : webHeaderCollection["Image_URL"].ToString();
+                labour.Doc1_URL = webHeaderCollection["Doc1_URL"] == null ? "" : webHeaderCollection["Doc1_URL"].ToString();
+                labour.Doc2_URL = webHeaderCollection["Doc2_URL"] == null ? "" : webHeaderCollection["Doc2_URL"].ToString();
+                labour.Doc3_URL = webHeaderCollection["Doc3_URL"] == null ? "" : webHeaderCollection["Doc3_URL"].ToString();
+                labour.Doc4_URL = webHeaderCollection["Doc4_URL"] == null ? "" : webHeaderCollection["Doc4_URL"].ToString();
 
                 supplierDAL.InsertNewLabourData("INSERT", labour);
                 labourDetails.Message = "Labour inserted successfully !";
