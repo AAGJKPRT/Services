@@ -236,5 +236,44 @@ namespace LMTDatabaseLayer
 
             return (CrystalConnection.DoStoredTable("usp_Get_All_Labours_List", objParamCollection));
         }
+
+        #region Private Functions
+        public static string GenerateCodeWithLeftPad(string mstTblName, string codeFieldName, int noOfPad, string strQueryCondition = "", bool finYear = false, string finYearColName = "")
+        {
+            string strQuery = "";
+            string strPadCode = "";
+            decimal maxCode = 0;
+            if (strQueryCondition == "")
+            {
+                if (finYear == false)
+                {
+                    strQuery = " Select isnull(max(" + codeFieldName + "),0)+1 From " + mstTblName + "";
+                }
+                else
+                {
+                    if (finYearColName != "") strQuery = " Select isnull(max(" + codeFieldName + "),0)+1 From " + mstTblName + " Where " + finYearColName + "='" + "2015-2016" + "'";
+                }
+            }
+            else
+            {
+                if (finYear == false)
+                {
+                    strQuery = " Select isnull(max(" + codeFieldName + "),0)+1 From " + mstTblName + " " + strQueryCondition;
+                }
+                else
+                {
+                    if (finYearColName != "") strQuery = " Select isnull(max(" + codeFieldName + "),0)+1 From " + mstTblName + " " + strQueryCondition + " And " + finYearColName + "='" + "2015-2016" + "'";
+                }
+            }
+
+            if (strQuery != "") maxCode = Convert.ToDecimal((CrystalConnection.SqlScalartoObj(strQuery)));
+            if (maxCode > 0)
+            {
+                strPadCode = maxCode.ToString().PadLeft(noOfPad, '0');
+            }
+
+            return strPadCode;
+        }
+        #endregion
     }
 }
