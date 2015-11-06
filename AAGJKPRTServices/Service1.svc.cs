@@ -154,58 +154,56 @@ namespace AAGJKPRTServices
             return userInfoDataContract;
         }
 
-        public LabourDetails InsertLabour(string LabourCode, string FullName, string FatherName, string CurrentAddress, string CurrentStateID, string CurrentCityID, string CurrentPincode, string PermanentAddress, string PermanentStateID, string PermanentCityID, string PermanentPincode, string PhoneNo, string SectorType, string LabourType, string Specialization, string Experience, string Wages, string Lbr_Skill, string Bool_Verification, string SupplierID, string Belonging1, string Belonging2, string Belonging3, string Belonging4)
+        public LabourDetails InsertLabour(string FullName, string FatherName, string CurrentAddress, string CurrentStateID, string CurrentCityID, string CurrentPincode, string PermanentAddress, string PermanentStateID, string PermanentCityID, string PermanentPincode, string PhoneNo, string SectorType, string LabourType, string Specialization, string Experience, string Wages, string Lbr_Skill, string Bool_Verification, string SupplierID, string Belonging1, string Belonging2, string Belonging3, string Belonging4)
         {
             LabourDetails labourDetails = new LabourDetails();
             Labour labour = new Labour();
             SupplierDAL supplierDAL = new SupplierDAL();
             System.Net.WebHeaderCollection webHeaderCollection = WebOperationContext.Current.IncomingRequest.Headers;
-
-            #region Url Decoding...
-            LabourCode = HttpUtility.UrlDecode(LabourCode);
-            FullName = HttpUtility.UrlDecode(FullName);
-            FatherName = HttpUtility.UrlDecode(FatherName);
-            CurrentAddress = HttpUtility.UrlDecode(CurrentAddress);
-            CurrentStateID = HttpUtility.UrlDecode(CurrentStateID);
-            CurrentCityID = HttpUtility.UrlDecode(CurrentCityID);
-            CurrentPincode = HttpUtility.UrlDecode(CurrentPincode);
-            PermanentAddress = HttpUtility.UrlDecode(PermanentAddress);
-            PermanentStateID = HttpUtility.UrlDecode(PermanentStateID);
-            PermanentCityID = HttpUtility.UrlDecode(PermanentCityID);
-            PermanentPincode = HttpUtility.UrlDecode(PermanentPincode);
-            PhoneNo = HttpUtility.UrlDecode(PhoneNo);
-            SectorType = HttpUtility.UrlDecode(SectorType);
-            LabourType = HttpUtility.UrlDecode(LabourType);
-            Specialization = HttpUtility.UrlDecode(Specialization);
-            Experience = HttpUtility.UrlDecode(Experience);
-            Wages = HttpUtility.UrlDecode(Wages);
-            Lbr_Skill = HttpUtility.UrlDecode(Lbr_Skill);
-            Bool_Verification = HttpUtility.UrlDecode(Bool_Verification);
-            SupplierID = HttpUtility.UrlDecode(SupplierID);
-            Belonging1 = HttpUtility.UrlDecode(Belonging1);
-            Belonging2 = HttpUtility.UrlDecode(Belonging2);
-            Belonging3 = HttpUtility.UrlDecode(Belonging3);
-            Belonging4 = HttpUtility.UrlDecode(Belonging4);
-            #endregion
-
-            #region Labour Code Generate
-            string Sector = "";
-            string LabourTypePreFix = "";
-            string CurrentCityPreFix = "";
-
-            string CodePostFix = SupplierDAL.GenerateCodeWithLeftPad("tbl_LabourRegistration", "Reg_ID", 6, "", false);
-            if (SectorType == "1")
-                Sector = "HH";
-            else if (SectorType == "2")
-                Sector = "GL";
-            else
-                Sector = "IL";
-            string CodePrefix = Sector + LabourType.Substring(0, 2) + CurrentCityID.Substring(0, 2) + CurrentPincode.Substring(4, 2);
-            //LabourCode = CodePrefix + CodePostFix;
-            #endregion
-
             try
             {
+                #region Url Decoding...
+                FullName = HttpUtility.UrlDecode(FullName);
+                FatherName = HttpUtility.UrlDecode(FatherName);
+                CurrentAddress = HttpUtility.UrlDecode(CurrentAddress);
+                CurrentStateID = HttpUtility.UrlDecode(CurrentStateID);
+                CurrentCityID = HttpUtility.UrlDecode(CurrentCityID);
+                CurrentPincode = HttpUtility.UrlDecode(CurrentPincode);
+                PermanentAddress = HttpUtility.UrlDecode(PermanentAddress);
+                PermanentStateID = HttpUtility.UrlDecode(PermanentStateID);
+                PermanentCityID = HttpUtility.UrlDecode(PermanentCityID);
+                PermanentPincode = HttpUtility.UrlDecode(PermanentPincode);
+                PhoneNo = HttpUtility.UrlDecode(PhoneNo);
+                SectorType = HttpUtility.UrlDecode(SectorType);
+                LabourType = HttpUtility.UrlDecode(LabourType);
+                Specialization = HttpUtility.UrlDecode(Specialization);
+                Experience = HttpUtility.UrlDecode(Experience);
+                Wages = HttpUtility.UrlDecode(Wages);
+                Lbr_Skill = HttpUtility.UrlDecode(Lbr_Skill);
+                Bool_Verification = HttpUtility.UrlDecode(Bool_Verification);
+                SupplierID = HttpUtility.UrlDecode(SupplierID);
+                Belonging1 = HttpUtility.UrlDecode(Belonging1);
+                Belonging2 = HttpUtility.UrlDecode(Belonging2);
+                Belonging3 = HttpUtility.UrlDecode(Belonging3);
+                Belonging4 = HttpUtility.UrlDecode(Belonging4);
+                #endregion
+
+                #region Labour Code Generate
+                string Sector = "";
+                string LabourTypeCurrentCityPreFix = supplierDAL.GetLabourTypeCityPreFixCode(LabourType, CurrentCityID);
+                //string CurrentCityPreFix = "";
+
+                string CodePostFix = SupplierDAL.GenerateCodeWithLeftPad("tbl_LabourRegistration", "Reg_ID", 6, "", false);
+                if (SectorType == "1")
+                    Sector = "HH";
+                else if (SectorType == "2")
+                    Sector = "GL";
+                else
+                    Sector = "IL";
+                string CodePrefix = Sector + LabourTypeCurrentCityPreFix + CurrentPincode.Substring(4, 2);
+                string LabourCode = CodePrefix + CodePostFix;
+                #endregion
+
                 labour.LabourCode = LabourCode.ToUpper() == "NULL" ? "" : LabourCode;
                 labour.FullName = FullName.ToUpper() == "NULL" ? "" : FullName;
                 labour.FatherName = FatherName.ToUpper() == "NULL" ? "" : FatherName;

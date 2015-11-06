@@ -274,6 +274,13 @@ namespace LMTDatabaseLayer
 
             return strPadCode;
         }
+
+        public string GetLabourTypeCityPreFixCode(string LabourTypeID, string CurrentCityID)
+        {
+            string query = "select Concat((select LEFT(Lbr_Type,2) as Prefix from dbo.tbl_Lbr_Type where Lbr_type_id =" + LabourTypeID + "),(select LEFT(CityName,2) as Prefix from dbo.tblCity where CityID=" + CurrentCityID + ")) as tbl";
+            return Convert.ToString((CrystalConnection.SqlScalartoObj(query)));
+        }
+
         #endregion
     }
 }
