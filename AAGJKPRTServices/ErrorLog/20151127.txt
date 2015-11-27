@@ -1,0 +1,13 @@
+27-11-2015 23:38:54 ==> Message: Invalid length for a Base-64 char array or string.Stack Trace:     at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at AAGJKPRTServices.Service1.Base64Decode(String base64EncodedData) in d:\LMT_Services\Services\AAGJKPRTServices\Service1.svc.cs:line 624
+   at AAGJKPRTServices.Service1.InsertLabour(String Param) in d:\LMT_Services\Services\AAGJKPRTServices\Service1.svc.cs:line 19627-11-2015 23:47:10 ==> Message: Invalid length for a Base-64 char array or string.Stack Trace:     at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at AAGJKPRTServices.Service1.Base64Decode(String base64EncodedData) in d:\LMT_Services\Services\AAGJKPRTServices\Service1.svc.cs:line 624
+   at AAGJKPRTServices.Service1.InsertLabour(String Param) in d:\LMT_Services\Services\AAGJKPRTServices\Service1.svc.cs:line 19627-11-2015 23:48:29 ==> Message: Invalid length for a Base-64 char array or string.Stack Trace:     at System.Convert.FromBase64_Decode(Char* startInputPtr, Int32 inputLength, Byte* startDestPtr, Int32 destLength)
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at AAGJKPRTServices.Service1.Base64Decode(String base64EncodedData) in d:\LMT_Services\Services\AAGJKPRTServices\Service1.svc.cs:line 624
+   at AAGJKPRTServices.Service1.InsertLabour(String Param) in d:\LMT_Services\Services\AAGJKPRTServices\Service1.svc.cs:line 196

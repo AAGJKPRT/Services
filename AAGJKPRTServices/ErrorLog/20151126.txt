@@ -1,0 +1,1 @@
+26-11-2015 00:06:05 ==> Message: Object reference not set to an instance of an object.Stack Trace:     at AAGJKPRTServices.Service1.InsertLabour(String Param) in d:\LMT_Services\Services\AAGJKPRTServices\Service1.svc.cs:line 171

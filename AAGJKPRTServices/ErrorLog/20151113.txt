@@ -1,0 +1,13 @@
+13-11-2015 22:47:38 ==> Message: Procedure or function usp_LabourRegProc has too many arguments specified.Stack Trace:     at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at CrystalDatabase.CrystalConnection.DoStored(String sqlStored, DbSqlParameterCollection sqlParams, Boolean transactional)
+   at CrystalDatabase.CrystalConnection.DoStored(String sqlStored, DbSqlParameterCollection sqlParams)
+   at LMTDatabaseLayer.SupplierDAL.InsertNewLabourData(String OpMode, Labour labour) in d:\LMT_Services\Services\LMTDatabaseLayer\SupplierDAL.cs:line 214
+   at AAGJKPRTServices.Service1.InsertLabour(String FullName, String FatherName, String CurrentAddress, String CurrentStateID, String CurrentCityID, String CurrentPincode, String PermanentAddress, String PermanentStateID, String PermanentCityID, String PermanentPincode, String PhoneNo, String SectorType, String LabourType, String Specialization, String Experience, String Wages, String Lbr_Skill, String Bool_Verification, String SupplierID, String Belonging1, String Belonging2, String Belonging3, String Belonging4) in d:\LMT_Services\Services\AAGJKPRTServices\Service1.svc.cs:line 238
